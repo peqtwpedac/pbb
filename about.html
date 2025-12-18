@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Phoenix</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>Phoenix</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <div class="container">
+                <h1>About Phoenix</h1>
+                <p>Discover our story and mission</p>
+            </div>
+        </section>
+
+        <section class="about-content">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Our Story</h2>
+                        <p>Phoenix was born from the idea of creating something beautiful and functional. We believe in the power of clean design and user-friendly interfaces that make technology accessible to everyone.</p>
+                        
+                        <h3>Our Mission</h3>
+                        <p>To deliver exceptional web experiences that combine stunning visual design with outstanding performance and usability.</p>
+                        
+                        <h3>Why Choose Phoenix?</h3>
+                        <ul>
+                            <li>Modern and responsive design</li>
+                            <li>Cross-browser compatibility</li>
+                            <li>Optimized performance</li>
+                            <li>Clean and maintainable code</li>
+                            <li>Accessibility focused</li>
+                        </ul>
+                    </div>
+                    <div class="about-image">
+                        <div class="placeholder-image">
+                            <p>Team Photo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="team">
+            <div class="container">
+                <h2>Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member" onclick="highlightMember(this)">
+                        <div class="member-photo"></div>
+                        <h3>Alex Johnson</h3>
+                        <p>Lead Developer</p>
+                    </div>
+                    <div class="team-member" onclick="highlightMember(this)">
+                        <div class="member-photo"></div>
+                        <h3>Sarah Chen</h3>
+                        <p>UI/UX Designer</p>
+                    </div>
+                    <div class="team-member" onclick="highlightMember(this)">
+                        <div class="member-photo"></div>
+                        <h3>Mike Rodriguez</h3>
+                        <p>Project Manager</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Phoenix. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
