@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Phoenix</title>
+    <title>Phoenix - About</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="navbar">
             <div class="nav-container">
-                <div class="logo">
-                    <h1>Phoenix</h1>
+                <div class="nav-logo">
+                    <h2>Phoenix</h2>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html" class="active">About</a></li>
-                </ul>
+                <div class="nav-menu">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="about.html" class="nav-link active">About</a></li>
+                    </ul>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
         </nav>
     </header>
@@ -25,7 +32,7 @@
         <section class="about-hero">
             <div class="container">
                 <h1>About Phoenix</h1>
-                <p>Discover our story and mission</p>
+                <p>Learn more about our mission and vision</p>
             </div>
         </section>
 
@@ -34,47 +41,41 @@
                 <div class="about-grid">
                     <div class="about-text">
                         <h2>Our Story</h2>
-                        <p>Phoenix was born from the idea of creating something beautiful and functional. We believe in the power of clean design and user-friendly interfaces that make technology accessible to everyone.</p>
+                        <p>Phoenix represents transformation and renewal. Just as the mythical phoenix rises from its ashes, our project embodies the spirit of innovation and rebirth in the digital world.</p>
                         
-                        <h3>Our Mission</h3>
-                        <p>To deliver exceptional web experiences that combine stunning visual design with outstanding performance and usability.</p>
+                        <p>We believe in creating solutions that not only meet today's needs but also anticipate tomorrow's challenges. Our team is dedicated to delivering exceptional experiences through thoughtful design and cutting-edge technology.</p>
                         
-                        <h3>Why Choose Phoenix?</h3>
+                        <h3>What We Do</h3>
                         <ul>
-                            <li>Modern and responsive design</li>
-                            <li>Cross-browser compatibility</li>
-                            <li>Optimized performance</li>
-                            <li>Clean and maintainable code</li>
-                            <li>Accessibility focused</li>
+                            <li>Web Development</li>
+                            <li>User Experience Design</li>
+                            <li>Digital Innovation</li>
+                            <li>Technology Consulting</li>
                         </ul>
                     </div>
+                    
                     <div class="about-image">
                         <div class="placeholder-image">
-                            <p>Team Photo</p>
+                            <p>Image Placeholder</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="team">
-            <div class="container">
-                <h2>Our Team</h2>
-                <div class="team-grid">
-                    <div class="team-member" onclick="highlightMember(this)">
-                        <div class="member-photo"></div>
-                        <h3>Alex Johnson</h3>
-                        <p>Lead Developer</p>
-                    </div>
-                    <div class="team-member" onclick="highlightMember(this)">
-                        <div class="member-photo"></div>
-                        <h3>Sarah Chen</h3>
-                        <p>UI/UX Designer</p>
-                    </div>
-                    <div class="team-member" onclick="highlightMember(this)">
-                        <div class="member-photo"></div>
-                        <h3>Mike Rodriguez</h3>
-                        <p>Project Manager</p>
+                <div class="team-section">
+                    <h2>Our Values</h2>
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <h3>Innovation</h3>
+                            <p>We constantly seek new ways to solve problems and improve experiences.</p>
+                        </div>
+                        <div class="value-item">
+                            <h3>Quality</h3>
+                            <p>We maintain the highest standards in everything we create.</p>
+                        </div>
+                        <div class="value-item">
+                            <h3>Collaboration</h3>
+                            <p>We work together to achieve extraordinary results.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,7 +84,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Phoenix. All rights reserved.</p>
+            <p>&copy; 2025 Phoenix. All rights reserved.</p>
         </div>
     </footer>
 

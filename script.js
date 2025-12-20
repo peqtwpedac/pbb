@@ -1,285 +1,259 @@
-// Global variables
-let currentTheme = 'light';
-
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Phoenix website loaded successfully!');
-    initializeWebsite();
+    // Initialize all functionality
+    initNavigation();
+    initScrollEffects();
+    initButtonInteractions();
+    initAnimations();
 });
 
-// Initialize website functionality
-function initializeWebsite() {
-    // Add smooth scrolling to all internal links
-    addSmoothScrolling();
-    
-    // Add active navigation highlighting
-    updateActiveNavigation();
-    
-    // Add loading animation to feature cards
-    animateOnScroll();
-}
+// Navigation Functions
+function initNavigation() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-// Show welcome message (used by CTA button)
-function showMessage() {
-    const messages = [
-        'Welcome to Phoenix! 🔥',
-        'Ready to build something amazing? 🚀',
-        'Let\'s create the future together! ⭐',
-        'Phoenix is here to help you soar! 🦅'
-    ];
-    
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    
-    // Create and show custom alert
-    showCustomAlert(randomMessage);
-}
+    // Mobile hamburger menu toggle
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
 
-// Custom alert function
-function showCustomAlert(message) {
-    // Remove existing alerts
-    const existingAlert = document.querySelector('.custom-alert');
-    if (existingAlert) {
-        existingAlert.remove();
-    }
-    
-    // Create new alert
-    const alertDiv = document.createElement('div');
-    alertDiv.className = 'custom-alert';
-    alertDiv.innerHTML = `
-        <div class="alert-content">
-            <span class="alert-message">${message}</span>
-            <button class="alert-close" onclick="closeAlert()">&times;</button>
-        </div>
-    `;
-    
-    // Add styles for the alert
-    const alertStyles = `
-        .custom-alert {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            max-width: 300px;
-        }
-        
-        .alert-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        
-        .alert-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .alert-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-    `;
-    
-    // Add styles if not already added
-    if (!document.querySelector('#alert-styles')) {
-        const styleSheet = document.createElement('style');
-        styleSheet.id = 'alert-styles';
-        styleSheet.textContent = alertStyles;
-        document.head.appendChild(styleSheet);
-    }
-    
-    document.body.appendChild(alertDiv);
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        if (document.contains(alertDiv)) {
-            closeAlert();
-        }
-    }, 5000);
-}
+        // Close mobile menu when clicking on nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
 
-// Close custom alert
-function closeAlert() {
-    const alert = document.querySelector('.custom-alert');
-    if (alert) {
-        alert.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            if (document.contains(alert)) {
-                alert.remove();
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target) || hamburger.contains(event.target);
+            if (!isClickInsideNav && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
             }
-        }, 300);
+        });
     }
 }
 
-// Highlight team member (used on about page)
-function highlightMember(memberElement) {
-    // Remove highlight from all members
-    const allMembers = document.querySelectorAll('.team-member');
-    allMembers.forEach(member => {
-        member.classList.remove('highlighted');
+// Scroll Effects
+function initScrollEffects() {
+    const navbar = document.querySelector('.navbar');
+    
+    // Add scroll effect to navbar
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            navbar.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
+            navbar.style.backdropFilter = 'blur(10px)';
+        } else {
+            navbar.style.backgroundColor = '#2c3e50';
+            navbar.style.backdropFilter = 'none';
+        }
     });
-    
-    // Add highlight to clicked member
-    memberElement.classList.add('highlighted');
-    
-    // Show member info
-    const memberName = memberElement.querySelector('h3').textContent;
-    const memberRole = memberElement.querySelector('p').textContent;
-    
-    showCustomAlert(`Meet ${memberName}, our ${memberRole}! 👋`);
-}
 
-// Add smooth scrolling to internal links
-function addSmoothScrolling() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
+    // Smooth scrolling for anchor links
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const offsetTop = targetElement.offsetTop - 70; // Account for fixed navbar
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
                 });
             }
         });
     });
 }
 
-// Update active navigation based on current page
-function updateActiveNavigation() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('.nav-menu a');
+// Button Interactions
+function initButtonInteractions() {
+    const ctaButton = document.querySelector('.cta-button');
     
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === currentPage || (href === 'index.html' && currentPage === '')) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
+    if (ctaButton) {
+        ctaButton.addEventListener('click', function() {
+            // Add a ripple effect
+            createRippleEffect(this, event);
+            
+            // Show a simple alert (you can customize this action)
+            setTimeout(() => {
+                alert('Welcome to Phoenix! This is where you would typically navigate to a signup page or take another action.');
+            }, 200);
+        });
+    }
+
+    // Add hover effects to feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
     });
 }
 
-// Animate elements on scroll
-function animateOnScroll() {
+// Create ripple effect for buttons
+function createRippleEffect(element, event) {
+    const ripple = document.createElement('span');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        pointer-events: none;
+    `;
+    
+    element.style.position = 'relative';
+    element.style.overflow = 'hidden';
+    element.appendChild(ripple);
+    
+    // Remove ripple after animation
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Initialize animations and intersection observer
+function initAnimations() {
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Add animation classes to elements
+    const featureCards = document.querySelectorAll('.feature-card');
+    const valueItems = document.querySelectorAll('.value-item');
+    const aboutText = document.querySelector('.about-text');
+    const aboutImage = document.querySelector('.about-image');
+
+    featureCards.forEach((card, index) => {
+        card.classList.add('fade-in');
+        card.style.transitionDelay = `${index * 0.2}s`;
+    });
+
+    valueItems.forEach((item, index) => {
+        item.classList.add('fade-in');
+        item.style.transitionDelay = `${index * 0.2}s`;
+    });
+
+    if (aboutText) aboutText.classList.add('slide-in-left');
+    if (aboutImage) aboutImage.classList.add('slide-in-right');
+
+    // Intersection Observer for animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('visible');
             }
         });
     }, {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
-    
-    // Observe feature cards and team members
-    const animateElements = document.querySelectorAll('.feature-card, .team-member');
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+
+    // Observe all animated elements
+    const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+    animatedElements.forEach(el => observer.observe(el));
 }
 
-// Utility function to toggle theme (for future enhancement)
-function toggleTheme() {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    document.body.setAttribute('data-theme', currentTheme);
-    localStorage.setItem('theme', currentTheme);
-}
-
-// Load saved theme on page load
-function loadSavedTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        currentTheme = savedTheme;
-        document.body.setAttribute('data-theme', currentTheme);
-    }
-}
-
-// Navigation menu toggle for mobile (future enhancement)
-function toggleMobileMenu() {
-    const navMenu = document.querySelector('.nav-menu');
-    navMenu.classList.toggle('mobile-active');
+// Utility Functions
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
 // Form validation helper (for future forms)
-function validateForm(form) {
-    const inputs = form.querySelectorAll('input[required], textarea[required]');
-    let isValid = true;
-    
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-            input.classList.add('error');
-            isValid = false;
-        } else {
-            input.classList.remove('error');
-        }
-    });
-    
-    return isValid;
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+// Local storage helpers
+function saveToLocalStorage(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.warn('LocalStorage is not available:', error);
+    }
+}
+
+function getFromLocalStorage(key) {
+    try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : null;
+    } catch (error) {
+        console.warn('Error reading from LocalStorage:', error);
+        return null;
+    }
 }
 
 // Console welcome message
-console.log(`
-🔥 Phoenix Website Loaded Successfully! 🔥
-
-Features:
-- Responsive design
-- Smooth animations
-- Interactive elements
-- Modern ES6+ JavaScript
-
-Developed with ❤️
-`);
-
-// Export functions for testing (if module system is used)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        showMessage,
-        highlightMember,
-        toggleTheme,
-        validateForm
-    };
-}
+console.log('%c🔥 Welcome to Phoenix! 🔥', 'color: #e74c3c; font-size: 20px; font-weight: bold;');
+console.log('%cThanks for checking out the console! If you have any questions about the code, feel free to explore.', 'color: #2c3e50; font-size: 12px;');
