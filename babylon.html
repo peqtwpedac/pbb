@@ -26,7 +26,7 @@
     <script>
         const canvas = document.getElementById("renderCanvas");
         const engine = new BABYLON.Engine(canvas, true);
-
+        let counter = 0
         const createScene = function() {
             // Create scene
             const scene = new BABYLON.Scene(engine);
@@ -57,21 +57,32 @@
                 { size: 2 },
                 scene
             );
+            cube.checkCollisions = true;
 
             // Add material to cube
             const material = new BABYLON.StandardMaterial("cubeMaterial", scene);
             material.diffuseColor = new BABYLON.Color3(0.3, 0.6, 1);
-            material.specularColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+            material.specularColor = new BABYLON.Color3(1, 1, 1);
+            material.specularPower = 64; // Higher = shinier surface
+            material.emissiveColor = new BABYLON.Color3(0.1, 0.2, 0.3); // Glow effect
+            material.ambientColor = new BABYLON.Color3(0.2, 0.3, 0.4);
+            material.alpha = 0.95; // Slight transparency
+            
+            // Add reflection
+            material.reflectionTexture = new BABYLON.CubeTexture("https://playground.babylonjs.com/textures/skybox", scene);
+            material.reflectionTexture.coordinatesMode = BABYLON.Texture.SPHERICAL_MODE;
+            material.reflectionTexture.level = 0.3; // Reflection intensity
+            
             cube.material = material;
 
             // Create ground
             const ground = BABYLON.MeshBuilder.CreateGround(
                 "ground",
-                { width: 10, height: 10 },
+                { width: 20, height: 20 },
                 scene
             );
             const groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
-            groundMaterial.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+            groundMaterial.diffuseColor = new BABYLON.Color3(0.4, 0.6, 0.6);
             ground.material = groundMaterial;
             ground.position.y = -1.5;
 
@@ -83,6 +94,7 @@
                 scene
             );
             houseBase.position.set(0, 0, 8);
+            houseBase.checkCollisions = true;
             const houseMaterial = new BABYLON.StandardMaterial("houseMaterial", scene);
             houseMaterial.diffuseColor = new BABYLON.Color3(0.8, 0.6, 0.4);
             houseBase.material = houseMaterial;
@@ -95,6 +107,7 @@
             );
             roof.rotation.z = Math.PI / 2;
             roof.position.set(0, 2, 8);
+            roof.checkCollisions = true;
             const roofMaterial = new BABYLON.StandardMaterial("roofMaterial", scene);
             roofMaterial.diffuseColor = new BABYLON.Color3(0.6, 0.2, 0.2);
             roof.material = roofMaterial;
@@ -118,23 +131,50 @@
                 keyState[e.key.toLowerCase()] = false;
             });
 
+            // Collision flash effect
+            let flashTimer = 0;
+            const flashDuration = 10; // frames
+
             // Animate cube
             scene.registerBeforeRender(function() {
                 cube.rotation.y += 0.01;
                 cube.rotation.x += 0.005;
 
-                // Move cube with WASD
+                // Move cube with WASD (with collision detection)
+                const velocity = new BABYLON.Vector3(0, 0, 0);
+                
                 if (keyState['w']) {
-                    cube.position.z += moveSpeed;
+                    velocity.z = moveSpeed;
                 }
                 if (keyState['s']) {
-                    cube.position.z -= moveSpeed;
+                    velocity.z = -moveSpeed;
                 }
                 if (keyState['a']) {
-                    cube.position.x -= moveSpeed;
+                    velocity.x = -moveSpeed;
                 }
                 if (keyState['d']) {
-                    cube.position.x += moveSpeed;
+                    velocity.x = moveSpeed;
+                }
+                
+                if (velocity.length() > 0) {
+                    const oldPosition = cube.position.clone();
+                    cube.moveWithCollisions(velocity);
+                    
+                    // Check if collision occurred (position didn't change as expected)
+                    const actualMovement = cube.position.subtract(oldPosition);
+                    if (actualMovement.length() < velocity.length() * 0.5) {
+                        // Collision detected - trigger flash
+                        flashTimer = flashDuration;
+                    }
+                }
+                
+                // Handle flash effect
+                if (flashTimer > 0) {
+                    const intensity = flashTimer / flashDuration;
+                    material.emissiveColor = new BABYLON.Color3(intensity, intensity, intensity);
+                    flashTimer--;
+                } else {
+                    material.emissiveColor = new BABYLON.Color3(0.1, 0.2, 0.3);
                 }
             });
 
@@ -145,6 +185,7 @@
 
         // Render loop
         engine.runRenderLoop(function() {
+            // console.log(counter++)
             scene.render();
         });
 
