@@ -18,6 +18,7 @@
         }
     </style>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
@@ -97,6 +98,13 @@
             const roofMaterial = new BABYLON.StandardMaterial("roofMaterial", scene);
             roofMaterial.diffuseColor = new BABYLON.Color3(0.6, 0.2, 0.2);
             roof.material = roofMaterial;
+
+            // Load 3D model (using a publicly available model)
+            BABYLON.SceneLoader.ImportMesh("", "https://models.babylonjs.com/", "shark.glb", scene, function (meshes) {
+                // Position the model
+                meshes[0].position.set(-5, 0, 5);
+                meshes[0].scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+            });
 
             // Keyboard controls
             const keyState = {};
