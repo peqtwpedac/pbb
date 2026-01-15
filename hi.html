@@ -6,35 +6,31 @@
 <style>
     body {
         font-family: system-ui, sans-serif;
-        background: #0f1220;
-        color: #eaeaf0;
+        background: #ffffff;
+        color: #333333;
         padding: 30px;
         max-width: 900px;
         margin: auto;
     }
-    h1 {
-        margin-bottom: 10px;
-    }
+
     .box {
-        background: #1b1f3b;
+        background: #f5f5f5;
         padding: 20px;
         border-radius: 10px;
         margin-bottom: 20px;
+        border: 1px solid #cccccc;
     }
-    label {
-        display: block;
-        margin-top: 10px;
-        font-weight: 600;
-    }
+
     input, select {
         width: 100%;
         padding: 8px;
         margin-top: 4px;
         border-radius: 6px;
-        border: none;
-        background: #2a2f5a;
-        color: white;
+        border: 1px solid #cccccc;
+        background: #ffffff;
+        color: #333333;
     }
+
     button {
         margin-top: 20px;
         padding: 12px;
@@ -42,31 +38,66 @@
         font-size: 16px;
         border-radius: 8px;
         border: none;
-        background: #4c6cff;
-        color: white;
+        background: #0072c6;
+        color: #ffffff;
         cursor: pointer;
     }
+    button:hover {
+        background: #005bb5;
+    }
+
     .result {
         padding: 15px;
         border-radius: 8px;
         margin-top: 20px;
         font-weight: bold;
+        color: #ffffff;
     }
     .allowed {
-        background: #1f7a4f;
+        background: #2c7a7b;
     }
     .denied {
-        background: #8a2c2c;
+        background: #a31f34;
     }
+
     ul {
         margin-top: 10px;
         font-weight: normal;
     }
+
+    .town-header {
+        width: 100%;
+        background: #ffffff;
+        border-bottom: 1px solid #d1d1d1;
+        margin-bottom: 25px;
+    }
+
+    .town-header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .town-logo {
+        height: 60px;
+        width: auto;
+    }
+
 </style>
 </head>
 
 <body>
-
+    <header class="town-header">
+        <div class="town-header-inner">
+            <img 
+                src="https://github.com/peqtwpedac/pbb/blob/caderam/PequannockLogo.png?raw=true"
+                alt="Pequannock Township Logo"
+                class="town-logo"
+            >
+        </div>
+    </header>
 <h1>Sign Ordinance Compliance Calculator</h1>
 <p>Enter your zoning district, building size, and sign details to see if your sign is permitted.</p>
 
@@ -120,12 +151,12 @@
 
 <script>
 function checkSign() {
-    const zone = zone.value;
-    const type = signType.value;
-    const facade = parseFloat(document.getElementById("facade").value);
-    const area = parseFloat(document.getElementById("area").value);
-    const height = parseFloat(document.getElementById("height").value);
-    const setback = parseFloat(document.getElementById("setback").value);
+    const zone = document.getElementById("zone").value;
+    const type = document.getElementById("signType").value;
+    const facade = parseFloat(document.getElementById("facade").value) || 0;
+    const area = parseFloat(document.getElementById("area").value) || 0;
+    const height = parseFloat(document.getElementById("height").value) || 0;
+    const setback = parseFloat(document.getElementById("setback").value) || 0;
     const lighting = document.getElementById("lighting").value;
     const late = document.getElementById("lateLighting").value;
 
