@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pequannock Regional Chamber of Commerce</title>
+
+    <link rel="stylesheet" href="chamber.css">
+</head>
+<body>
+
+    <!-- =========================
+         HEADER / NAVIGATION
+         ========================= -->
+    <header class="site-header" id="siteHeader">
+        <nav class="navbar">
+
+            <!-- HEADER LOGO (SMALL, LEFT) -->
+            <div class="header-logo">
+                <img src="images/chamber-logo.png" alt="Chamber Logo">
+            </div>
+
+            <ul class="nav-list">
+                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Members</a></li>
+                <li><a href="#">Join</a></li>
+
+                <li class="dropdown">
+                    <a href="#">Events</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Shop the Town</a></li>
+                        <li><a href="#">Street Festival</a></li>
+                        <li><a href="#">Calendar</a></li>
+                        <li><a href="#">Meetings</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">Start Your Business</a></li>
+                <li><a href="#">Sponsors</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- =========================
+         HERO SECTION (FULL TOP)
+         ========================= -->
+    <section class="hero">
+
+        <!-- DARK OVERLAY (optional but recommended) -->
+        <div class="hero-overlay"></div>
+
+        <!-- CENTERED LARGE LOGO -->
+        <div class="hero-content">
+            <img
+                src="images/chamber-logo.png"
+                alt="Pequannock Chamber Logo"
+                class="hero-logo fade-in"
+            >
+
+            <h2>
+                Check out the
+                <a href="https://sites.google.com" target="_blank">
+                    PTHS Work Based Learning Program
+                </a>
+            </h2>
+        </div>
+    </section>
+
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+    <main class="main-content">
+
+        <section class="intro">
+            <h1>Pequannock Township Regional Chamber of Commerce</h1>
+            <p>
+                The Pequannock Regional Chamber of Commerce, established in 1993, has been pivotal
+                in fostering a vibrant business community. Their commitment is demonstrated through
+                initiatives such as funding township signage, supporting local schools, hosting
+                business networking meetings, and organizing community-wide events.
+            </p>
+        </section>
+
+        <section class="additional-info">
+            <h2>To view the Business Guide online</h2>
+            <img src="images/business-guide.jpg" alt="Business Guide">
+
+            <h2>Economic Development Commission</h2>
+            <p>
+                The Economic Development Commission (EDC) works to attract and retain businesses
+                within Pequannock Township.
+                <a href="https://www.peqtwp.org" target="_blank">Visit the EDC page</a>.
+            </p>
+        </section>
+
+        <section class="footer-info">
+            <h3>
+                PEQUANNOCK TOWNSHIP<br>
+                REGIONAL<br>
+                CHAMBER OF COMMERCE
+            </h3>
+            <p>Contact Us: 201-321-4883</p>
+            <p>P.O. Box 112<br>Pompton Plains, NJ 07444</p>
+        </section>
+
+        <section class="mailing-list">
+            <h4>SIGN UP FOR OUR Mailing List</h4>
+            <form>
+                <input type="email" placeholder="Email *" required>
+                <button type="submit">SUBMIT</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- =========================
+         FOOTER
+         ========================= -->
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="#">Home</a> |
+            <a href="#">About</a> |
+            <a href="#">Members</a> |
+            <a href="#">Join</a> |
+            <a href="#">Contact</a>
+        </div>
+        <p>© Copyright 2025. All Rights Reserved.</p>
+    </footer>
+
+    <!-- =========================
+         HEADER SCROLL SCRIPT
+         ========================= -->
+    <script>
+        const header = document.getElementById('siteHeader');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 5) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+</body>
+</html>
